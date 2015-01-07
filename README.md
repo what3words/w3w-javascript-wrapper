@@ -17,7 +17,7 @@ Download and include the what3words JavaScript file
 ### What3words.wordsToPosition(words, callback);
 This function takes either:
 - a string of 3 words `'table.book.chair'`
-- or an array of 3 words `['table', 'book', 'chair']`
+- an array of 3 words `['table', 'book', 'chair']`
 - a oneword string `'*BobsHouse'`
 
 And the first parameter of the callback is:
@@ -26,7 +26,7 @@ And the first parameter of the callback is:
 ### What3words.positionToWords(position, callback);
 This function takes either:
 - a string of 2 positions `'0.1234, 1.5678'`
-- or an array of 2 positions `[0.1234, 1.5678]`
+- an array of 2 positions `[0.1234, 1.5678]`
 
 And the first parameter of the callback is:
 - an array of 3 words `['table', 'book', 'chair']`
