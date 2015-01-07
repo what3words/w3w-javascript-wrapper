@@ -7,7 +7,7 @@ Use the what3words API in your website (see http://what3words.com/api/reference)
 This will require jQuery included, if you aren't already using it:
 `<script src="//jquery"></script>`
 
-Include what3words JavaScript file
+Download and include what3words JavaScript file
 `<script src="/javascript/what3words.js"></script>`
 
 ## Functions
