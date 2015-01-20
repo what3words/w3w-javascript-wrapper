@@ -1,6 +1,6 @@
 #what3words javascript-wrapper
 
-Use the what3words API in your website (see http://what3words.com/api/reference)
+Use the what3words API in your website (see http://developer.what3words.com/api)
 
 
 ## Installation
