@@ -14,16 +14,15 @@ Download and include the what3words JavaScript file
 
 ## Functions
 
-### What3words.wordsToPosition(words, callback);
+### what3words.wordsToPosition(words, callback);
 This function takes either:
 - a string of 3 words `'table.book.chair'`
 - an array of 3 words `['table', 'book', 'chair']`
-- a oneword string `'*BobsHouse'`
 
 And the first parameter of the callback is:
 - an array of 2 coordinates `[0.1234, 1.5678]`
 
-### What3words.positionToWords(position, callback);
+### what3words.positionToWords(position, callback);
 This function takes either:
 - a string of 2 positions `'0.1234, 1.5678'`
 - an array of 2 positions `[0.1234, 1.5678]`
@@ -31,9 +30,9 @@ This function takes either:
 And the first parameter of the callback is:
 - an array of 3 words `['table', 'book', 'chair']`
 
-### What3words.setLanguage(language)
+### what3words.setLanguage(language)
 This function sets the classes' language, and takes a 2 letter language string:
-- `What3words.setLanguage('fr');`
+- `what3words.setLanguage('fr');`
 
 
 ## Code examples
@@ -41,7 +40,7 @@ This function sets the classes' language, and takes a 2 letter language string:
 ### Convert position to 3 words
 
 ```javascript
-What3words.positionToWords([0.1234, 1.5678], function (ret) {
+what3words.positionToWords([0.1234, 1.5678], function (ret) {
   console.log(ret);
   // Returns ["overtime", "pruners", "bagel"]
 });
@@ -50,7 +49,7 @@ What3words.positionToWords([0.1234, 1.5678], function (ret) {
 ### Convert 3 words to position
 
 ```javascript
-What3words.wordsToPosition(['table', 'book', 'chair'], function (ret) {
+what3words.wordsToPosition(['table', 'book', 'chair'], function (ret) {
   console.log(ret);
   // Returns [41.12876, -73.403726]
 });
