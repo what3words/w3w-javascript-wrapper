@@ -55,7 +55,7 @@ Each callback's `response` parameter will contain the JSON payload from the what
 
 ### What3Words.wordsToPosition(words, corners, callbackHandler);
 
-Converts a 3 words address to the corresponding coordinates, as longitude and latitude.
+Converts a 3 words address to the corresponding coordinates, as latitude and longitude.
 
 The `words` parameter can be either:
 - a string of 3 dot separated words: `'index.home.raft'`
@@ -78,11 +78,11 @@ For more information see the `w3w` [documentation](http://developer.what3words.c
 
 ### What3Words.positionToWords(position, corners, callbackHandler);
 
-Converts a longitude and latitude to the nearest 3 word address.
+Converts a latitude and longitude to the nearest 3 word address.
 
 The `position` parameter can be either:
-- a string containing comma separated longitude and latitude: `'0.1234, 1.5678'`
-- an array of longitude and latitude: `[0.1234, 1.5678]`
+- a string containing comma separated latitude and longitude: `'0.1234, 1.5678'`
+- an array of latitude and longitude: `[0.1234, 1.5678]`
 
 The `corners` parameter is a `boolean` value; if set to `true` to return JSON will contain the bounding box for the 3 word address.
 
