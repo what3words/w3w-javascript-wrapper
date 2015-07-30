@@ -182,7 +182,7 @@ What3Words.prototype.wordsToPosition = function(words, corners, callback) {
     }
     params = What3WordsUtils.mergeOptions(params, this.options, args);
     var url = this.urls.wordsToPosition + '?' + What3WordsUtils.assembleQuery(params);
-    console.log('wordsToPosition: ' + url);
+    // console.log('wordsToPosition: ' + url);
     What3WordsUtils.handleRequest(url, callback);
 };
 
@@ -236,7 +236,7 @@ What3Words.prototype.positionToWords = function(position, corners, callback) {
     }
     params = What3WordsUtils.mergeOptions(params, this.options, args);
     var url = this.urls.positionToWords + '?' + What3WordsUtils.assembleQuery(params);
-    console.log('positionToWords: ' + url);
+    // console.log('positionToWords: ' + url);
     What3WordsUtils.handleRequest(url, callback);
 };
 
@@ -259,6 +259,6 @@ What3Words.prototype.getLanguages = function(callback) {
         key: this.options.key
     };
     var url = this.urls.getLanguages + '?' + What3WordsUtils.assembleQuery(params);
-    console.log('getLanguages: ' + url);
+    // console.log('getLanguages: ' + url);
     What3WordsUtils.handleRequest(url, callback);
 };

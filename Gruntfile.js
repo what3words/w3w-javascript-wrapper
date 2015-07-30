@@ -59,6 +59,6 @@ module.exports = function(grunt) {
             grunt.file.delete(file);
         });
     });
-    grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify');
+    grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify']);
     grunt.registerTask('docs', ['jsdoc']);
 }
