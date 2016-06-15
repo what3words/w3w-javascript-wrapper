@@ -19,6 +19,14 @@ var what3words = new function (language) {
 		if (language !== undefined)
 			this.language = language;
 	};
+	
+	/**
+	 * Sets the API key
+	 */
+	this.setKey = function (key) {
+		if (key !== undefined)
+			this.API_KEY = key;
+	};
 
 	/**
 	 * Forward Geocode (words to location)
@@ -78,7 +86,7 @@ var what3words = new function (language) {
 	 * Standard Blend from the API
 	 * https://docs.what3words.com/api/v2/#standardblend
 	 */
-	this.standardBlend = function (words,callback){
+	this.standardlend = function (words,callback){
 		if (typeof words === 'undefined')
 			throw 'No valid words passed';
 		else if (typeof words === 'object')
