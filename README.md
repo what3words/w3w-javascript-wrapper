@@ -45,7 +45,7 @@ This function takes a 3 word address may either be a full 3 word address or a pa
 - an array of 2 words and a partial `['plan', 'clips', 'abov']`
 
 And the first parameter of the callback is:
-- an array of 2 coordinates `{
+- an array of blend objects `{
   "blends": [
     {
       "distance": 1,
@@ -58,6 +58,26 @@ And the first parameter of the callback is:
         "lat": 51.432393
       },
       "country": "gb"
+    },
+...
+}`
+
+### what3words.grid(Xmax,Ymax, Xmin, Ymin, callback);
+This function takes two latitude / longitude pairs to return a grid of w3w areas.
+- a set of four floats `51.1234,-0.1234,51.11678,-0.13665`
+
+And the first parameter of the callback is:
+- an array of line objects `{
+  "lines": [
+    {
+      "start": {
+        "lng": 0.11612600000001,
+        "lat": 52.208009918068
+      },
+      "end": {
+        "lng": 0.11753999999999,
+        "lat": 52.208009918068
+      }
     },
 ...
 }`
