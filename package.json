@@ -2,7 +2,7 @@
   "name": "w3w-javascript-wrapper",
   "version": "3.0.0",
   "description": "Javascript wrapper for the what3words API",
-  "main": "dist/w3w.js",
+  "main": "dist/W3W.Geocoder.js",
   "scripts": {
     "test": "grunt test"
   },
