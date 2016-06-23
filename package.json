@@ -1,44 +1,52 @@
 {
-    "name": "w3w-javascript-wrapper",
-    "version": "2.0.0",
-    "description": "Javascript wrapper for the what3words API",
-    "main": "dist/w3w.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "w3w-javascript-wrapper",
+  "version": "3.0.0",
+  "description": "Javascript wrapper for the what3words API",
+  "main": "dist/w3w.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vicchi/w3w-javascript-wrapper.git"
+  },
+  "keywords": [
+    "what3words",
+    "api",
+    "javascript"
+  ],
+  "author": "Gary Gale <gary@vicchi.org> (http://www.garygale.com)",
+  "contributors": [
+    {
+      "name": "Gary Gale",
+      "email": "gary@vicchi.org"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/vicchi/w3w-javascript-wrapper.git"
+    {
+      "name": "Will Henderson",
+      "email": "will@what3words.com"
     },
-    "keywords": [
-        "what3words",
-        "api",
-        "javascript"
-    ],
-    "author": "Gary Gale <gary@vicchi.org> (http://www.garygale.com)",
-    "contributors": [
-        {
-            "name": "Gary Gale",
-            "email": "gary@vicchi.org"
-        },
-        {
-            "name": "Will Henderson",
-            "email": "will@what3words.com"
-        }
-    ],
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/vicchi/w3w-javascript-wrapper/issues"
+    {
+        "name": "David Piesse",
     },
-    "homepage": "https://github.com/vicchi/w3w-javascript-wrapper#readme",
-    "devDependencies": {
-        "grunt": "^0.4.5",
-        "grunt-contrib-concat": "^0.5.1",
-        "grunt-contrib-jshint": "^0.11.2",
-        "grunt-contrib-uglify": "^0.9.1",
-        "grunt-contrib-watch": "^0.6.1",
-        "grunt-jsdoc": "^0.6.7",
-        "load-grunt-tasks": "^3.2.0"
-    },
-    "dependencies": {}
+    {
+        "name": "Oliver Svenson"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vicchi/w3w-javascript-wrapper/issues"
+  },
+  "homepage": "https://github.com/vicchi/w3w-javascript-wrapper#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jasmine": "^1.0.3",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "jasmine-expect": "^2.0.2",
+    "load-grunt-tasks": "^3.5.0"
+  },
+  "dependencies": {}
 }

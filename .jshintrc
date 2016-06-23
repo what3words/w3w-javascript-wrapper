@@ -1,0 +1,8 @@
+{
+    "globalstrict": false,
+    "globals": {
+        "define": false,
+        "module": false,
+        "window": false
+    }
+}
