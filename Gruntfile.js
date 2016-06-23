@@ -85,6 +85,6 @@ module.exports = function(grunt) {
         });
     });
     grunt.registerTask('test', ['jasmine']);
-    grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify', 'test']);
-    grunt.registerTask('rebuild', ['clean', 'build']);
+    grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify']);
+    grunt.registerTask('rebuild', ['clean', 'build', 'test']);
 };
