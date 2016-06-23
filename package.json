@@ -4,7 +4,7 @@
   "description": "Javascript wrapper for the what3words API",
   "main": "dist/w3w.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
       "email": "will@what3words.com"
     },
     {
-        "name": "David Piesse",
+        "name": "David Piesse"
     },
     {
         "name": "Oliver Svenson"
