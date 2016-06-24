@@ -11,10 +11,11 @@ This will require jQuery included, if you aren't already using it:
 Download and include the what3words JavaScript file
 `<script src="/javascript/what3words.js"></script>`
 
+You will need an API key from what3words.
 
 ## Functions
 
-### what3words.wordsToPosition(words, callback);
+### what3words.forward(words, callback);
 This function takes either:
 - a string of 3 words `'table.book.chair'`
 - an array of 3 words `['table', 'book', 'chair']`
@@ -22,7 +23,7 @@ This function takes either:
 And the first parameter of the callback is:
 - an array of 2 coordinates `[0.1234, 1.5678]`
 
-### what3words.positionToWords(position, callback);
+### what3words.reverse(position, callback);
 This function takes either:
 - a string of 2 positions `'0.1234, 1.5678'`
 - an array of 2 positions `[0.1234, 1.5678]`
@@ -30,17 +31,71 @@ This function takes either:
 And the first parameter of the callback is:
 - an array of 3 words `['table', 'book', 'chair']`
 
+### what3words.autosuggest(words, callback);
+This function takes either:
+- a string of 2 words and a partial `'table.book.ch'`
+- an array of 2 words and a partial `['table', 'book', 'ch']`
+
+And the first parameter of the callback is:
+- an array of 2 coordinates `[0.1234, 1.5678]`
+
+### what3words.standardblend(words, callback);
+This function takes a 3 word address may either be a full 3 word address or a partial 3 word address containing the first 2 words in full and at least 1 character of the 3rd word in either string or array format.
+- a string of 2 words and a partial `'plan.clips.above'`
+- an array of 2 words and a partial `['plan', 'clips', 'abov']`
+
+And the first parameter of the callback is:
+- an array of blend objects `{
+  "blends": [
+    {
+      "distance": 1,
+      "rank": 1,
+      "words": "plan.clips.above",
+      "language": "en",
+      "place": "Teddington, London",
+      "geometry": {
+        "lng": -0.348023,
+        "lat": 51.432393
+      },
+      "country": "gb"
+    },
+...
+}`
+
+### what3words.grid(Xmax,Ymax, Xmin, Ymin, callback);
+This function takes two latitude / longitude pairs to return a grid of w3w areas.
+- a set of four floats `51.1234,-0.1234,51.11678,-0.13665`
+
+And the first parameter of the callback is:
+- an array of line objects `{
+  "lines": [
+    {
+      "start": {
+        "lng": 0.11612600000001,
+        "lat": 52.208009918068
+      },
+      "end": {
+        "lng": 0.11753999999999,
+        "lat": 52.208009918068
+      }
+    },
+...
+}`
+
 ### what3words.setLanguage(language)
 This function sets the classes' language, and takes a 2 letter language string:
 - `what3words.setLanguage('fr');`
 
+### what3words.languages()
+This function returns a list of available languages from the API:
+- `what3words.languages();`
 
 ## Code examples
 
 ### Convert position to 3 words
 
 ```javascript
-what3words.positionToWords([0.1234, 1.5678], function (ret) {
+what3words.forward([0.1234, 1.5678], function (ret) {
   console.log(ret);
   // Returns ["overtime", "pruners", "bagel"]
 });
@@ -49,7 +104,7 @@ what3words.positionToWords([0.1234, 1.5678], function (ret) {
 ### Convert 3 words to position
 
 ```javascript
-what3words.wordsToPosition(['table', 'book', 'chair'], function (ret) {
+what3words.reverse(['table', 'book', 'chair'], function (ret) {
   console.log(ret);
   // Returns [41.12876, -73.403726]
 });
