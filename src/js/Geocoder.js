@@ -366,15 +366,20 @@ W3W.Geocoder.prototype._formatBoundingBox = function(coords) {
  * @throws {Error} Missing callback parameter
  * @throws {Error} Invalid callback parameter
  */
-W3W.Geocoder.prototype.grid = function(bbox, callback) {
-    if (typeof bbox === 'undefined') {
-        throw new Error('Missing bbox parameter');
+W3W.Geocoder.prototype.grid = function(params, callback) {
+    if (typeof params === 'undefined' || typeof params !== 'object') {
+        throw new Error('Missing or invalid params object');
     }
-    else if (typeof bbox === 'object') {
-        bbox = bbox.join(',');
-    }
-    else if (typeof bbox !== 'string') {
-        throw new Error('Invalid bbox parameter');
+
+    if (params) {
+        if (!params.hasOwnProperty('bbox')) {
+            throw new Error('The params object is missing required bbox property');
+        }
+
+        params.bbox = this._formatBoundingBox(params.bbox);
+        if (null === params.bbox) {
+            throw new Error('Invalid format coordinates for params.bbox');
+        }
     }
 
     if (typeof callback === 'undefined') {
@@ -384,12 +389,7 @@ W3W.Geocoder.prototype.grid = function(bbox, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var params = {};
-    var args = {
-        bbox: bbox
-    };
-
-    params = W3W.Utils.mergeOptions(params, this.options, args);
+    params = W3W.Utils.mergeOptions(params, this.options);
     var url = this.urls.grid + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };

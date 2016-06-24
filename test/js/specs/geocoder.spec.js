@@ -341,8 +341,11 @@ describe('what3words', function() {
                     done();
                 }
             };
-            var bbox = [52.208867, 0.117540, 52.207988, 0.116126];
-            what3words.grid(bbox, callback);
+
+            var params = {
+                bbox: [52.208867, 0.117540, 52.207988, 0.116126]
+            };
+            what3words.grid(params, callback);
         });
     });
 
