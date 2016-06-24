@@ -15,7 +15,7 @@ $ bower install w3w-javascript-wrapper
 ### Via NPM
 
 ```bash
-$ npm install w3w-javascript-wrapper --save-dev
+$ npm install w3w-javascript-wrapper --save
 ```
 
 ### Via Download
