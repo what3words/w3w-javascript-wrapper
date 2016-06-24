@@ -3,31 +3,52 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        clean: {
+            rebuild: ['dist/*']
+        },
         concat: {
+            options: {
+                banner: '(function() {\n',
+                footer: '})();'
+            },
             js: {
                 src: [
-                    'src/js/what3words.js'
+                    'src/js/Bootstrap.js',
+                    'src/js/Xhr.js',
+                    'src/js/Utils.js',
+                    'src/js/Geocoder.js'
                 ],
-                dest: 'dist/what3words-src.js'
+                dest: 'dist/W3W.Geocoder.js'
             }
         },
         jshint: {
-            files: {
-                src: ['src/js/**/*.js']
-            }
+            options: {
+                jshintrc: true
+            },
+            beforeconcat: ['src/js/**.js'],
+            afterconcat: ['dist/W3W.Geocoder.js'],
+            grunt: ['Gruntfile.js']
         },
         uglify: {
             js: {
                 files: {
-                    'dist/what3words.js': ['dist/what3words-src.js']
+                    'dist/W3W.Geocoder.min.js': ['dist/W3W.Geocoder.js']
                 }
             }
         },
-        jsdoc: {
-            dist: {
-                src: ['src/js/**/*.js'],
+        jasmine: {
+            js: {
+                src: 'dist/W3W.Geocoder.js',
                 options: {
-                    destination: 'docs'
+                    specs: 'test/js/**/*.spec.js',
+                    vendor: ['node_modules/jasmine-expect/dist/jasmine-matchers.js'],
+                    template: 'test/js/templates/SpecRunner.tmpl',
+                    templateOptions: {
+                        api_key: process.env.W3W_API_KEY
+                    },
+                    '--web-security' : false,
+                    '--local-to-remote-url-access' : true,
+                    '--ignore-ssl-errors' : true
                 }
             }
         },
@@ -37,15 +58,19 @@ module.exports = function(grunt) {
             },
             grunt: {
                 files: ['Gruntfile.js'],
-                tasks: ['build'],
+                tasks: ['jshint:grunt', 'build'],
             },
             js: {
                 files: ['src/js/**.js'],
                 tasks: ['jshint', 'concat']
             },
             uglify: {
-                files: ['dist/js/*-src.js'],
+                files: ['dist/*.js', '!dist/*.min.js'],
                 tasks: ['uglify']
+            },
+            test: {
+                files: ['dist/*.js', '!dist/*.min.js', 'test/js/**/*.tmpl', 'test/js/specs/**/*.js'],
+                tasks: ['test']
             }
         }
     });
@@ -59,6 +84,7 @@ module.exports = function(grunt) {
             grunt.file.delete(file);
         });
     });
+    grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify']);
-    grunt.registerTask('docs', ['jsdoc']);
-}
+    grunt.registerTask('rebuild', ['clean', 'build', 'test']);
+};
