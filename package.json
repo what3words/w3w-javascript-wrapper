@@ -1,6 +1,6 @@
 {
   "name": "w3w-javascript-wrapper",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Javascript wrapper for the what3words API",
   "main": "dist/W3W.Geocoder.js",
   "scripts": {
@@ -30,6 +30,10 @@
     },
     {
         "name": "Oliver Svenson"
+    },
+    {
+      "name": "Arnaud Ferrand",
+      "email": "arnaud@what3words.com"
     }
   ],
   "license": "MIT",

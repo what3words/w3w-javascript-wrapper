@@ -3,7 +3,7 @@
 'use strict';
 
 var W3W = {
-    version: '3.0.0'
+    version: '3.0.3'
 };
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -111,15 +111,7 @@ W3W.Utils = {
 };
 
 W3W.Geocoder = function(options) {
-    this.base_url = 'https://api.what3words.com/v2/';
-    this.urls = {
-        forward: this.base_url + 'forward',
-        reverse: this.base_url + 'reverse',
-        autosuggest: this.base_url + 'autosuggest',
-        standardblend: this.base_url + 'standardblend',
-        grid: this.base_url + 'grid',
-        languages: this.base_url + 'languages'
-    };
+    this.base_url = 'https://api.what3words.com/v2/' ;
 
     if (typeof options === 'undefined') {
         throw new Error('Missing what3words options');
@@ -131,6 +123,18 @@ W3W.Geocoder = function(options) {
         lang: 'en'
     };
     this.options = W3W.Utils.mergeOptions(this.options, options);
+    if( this.options.hasOwnProperty('base_url')) {
+        this.base_url = this.options.base_url;
+        delete this.options.base_url;
+    }
+    this.urls = {
+        forward: this.base_url + 'forward',
+        reverse: this.base_url + 'reverse',
+        autosuggest: this.base_url + 'autosuggest',
+        standardblend: this.base_url + 'standardblend',
+        grid: this.base_url + 'grid',
+        languages: this.base_url + 'languages'
+    };
 };
 
 // var params = {

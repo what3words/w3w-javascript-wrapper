@@ -2,7 +2,7 @@ validateHTTPStatus = function(data) {
     expect(data.status).toBeDefined();
     expect(data.status.status).toBeDefined();
     expect(data.status.status).toEqual(200);
-}
+};
 
 validateJSONPayload = function(data) {
     validateHTTPStatus(data);
@@ -35,7 +35,7 @@ describe('what3words', function() {
     describe('initialisation and loading', function() {
         it('should be available as a function', function() {
             expect(typeof W3W.Geocoder).toEqual('function');
-        })
+        });
     });
 
     describe('constructor exceptions', function() {
@@ -49,7 +49,7 @@ describe('what3words', function() {
         missingApiKey = function() {
             options = {};
             what3words = new W3W.Geocoder(options);
-        }
+        };
 
         it('should throw Error when missing options', function() {
             expect(missingOptions).toThrowError(Error);
@@ -72,7 +72,7 @@ describe('what3words', function() {
         it('should be instance of W3W.Geocoder', function() {
             // expect(what3words).to.be.an.instanceof(W3W.Geocoder);
             expect(what3words).toEqual(jasmine.any(W3W.Geocoder));
-        })
+        });
     });
 
     describe('#forward', function() {
