@@ -2,7 +2,7 @@
 'use strict';
 
 var W3W = {
-    version: '3.0.0'
+    version: '3.0.3'
 };
 
 if (typeof module === 'object' && typeof module.exports === 'object') {

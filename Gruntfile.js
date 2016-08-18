@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: true
             },
-            beforeconcat: ['src/js/**.js'],
+            beforeconcat: ['src/js/**.js', 'test/js/**.js'],
             afterconcat: ['dist/W3W.Geocoder.js'],
             grunt: ['Gruntfile.js']
         },
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
             },
             test: {
                 files: ['dist/*.js', '!dist/*.min.js', 'test/js/**/*.tmpl', 'test/js/specs/**/*.js'],
-                tasks: ['test']
+                tasks: ['jshint', 'test']
             }
         }
     });

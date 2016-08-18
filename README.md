@@ -1,4 +1,4 @@
-# ![what3words](https://map.what3words.com/images/map/marker-border.png)w3w-javascript-wrapper ![Build Status](https://travis-ci.org/vicchi/w3w-javascript-wrapper.svg)
+# ![what3words](https://map.what3words.com/images/map/marker-border.png)w3w-javascript-wrapper ![Build Status](https://travis-ci.org/what3words/w3w-javascript-wrapper.svg)
 
 ## Description
 
