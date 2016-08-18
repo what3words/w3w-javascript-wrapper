@@ -1,10 +1,11 @@
 {
     "name": "w3w-javascript-wrapper",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "homepage": "https://github.com/what3words/w3w-javascript-wrapper",
     "authors": [
         "Will Henderson <will@what3words.com>",
         "Gary Gale <gary@vicchi.org>",
+        "Arnaud Ferrand <arnaud@what3words.com>",
         "David Piesse",
         "Oliver Svenson"
     ],
