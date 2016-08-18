@@ -3,7 +3,7 @@
 'use strict';
 
 var W3W = {
-    version: '3.0.3'
+    version: '3.0.4'
 };
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -166,7 +166,7 @@ W3W.Geocoder.prototype.forward = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    params = W3W.Utils.mergeOptions(params, this.options);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.forward + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -204,7 +204,7 @@ W3W.Geocoder.prototype.reverse = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    params = W3W.Utils.mergeOptions(params, this.options);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.reverse + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -336,7 +336,7 @@ W3W.Geocoder.prototype.autosuggest = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    params = W3W.Utils.mergeOptions(params, this.options, clip);
+    params = W3W.Utils.mergeOptions(this.options, params, clip);
     var url = this.urls.autosuggest + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -376,7 +376,7 @@ W3W.Geocoder.prototype.standardblend = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    params = W3W.Utils.mergeOptions(params, this.options);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.standardblend + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -404,7 +404,7 @@ W3W.Geocoder.prototype.grid = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    params = W3W.Utils.mergeOptions(params, this.options);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.grid + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };

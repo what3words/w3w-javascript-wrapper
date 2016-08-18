@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: true
             },
-            beforeconcat: ['src/js/**.js', 'test/js/**.js'],
+            beforeconcat: ['src/js/**/*.js', 'test/js/**/*.js'],
             afterconcat: ['dist/W3W.Geocoder.js'],
             grunt: ['Gruntfile.js']
         },
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
                 tasks: ['jshint:grunt', 'build'],
             },
             js: {
-                files: ['src/js/**.js'],
+                files: ['src/js/**/*.js'],
                 tasks: ['jshint', 'concat']
             },
             uglify: {
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
             grunt.file.delete(file);
         });
     });
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['build', 'jasmine']);
     grunt.registerTask('build', ['nodsstore', 'jshint', 'concat', 'uglify']);
     grunt.registerTask('rebuild', ['clean', 'build', 'test']);
 };
