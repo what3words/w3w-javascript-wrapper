@@ -94,7 +94,7 @@ describe('what3words in french', function() {
             what3words = new W3W.Geocoder(options);
         });
 
-        it('should return a standardblend for index.home.raft with a focus of 51.4243877,-0.3474524', function(done) {
+        it('should return a standardblend for bassin.casanier.onction with a focus of 45.188538, 5.724537', function(done) {
             var callback = {
                 onSuccess: function(data) {
                     validateHTTPStatus(data);
@@ -121,5 +121,5 @@ describe('what3words in french', function() {
         });
     });
 
-    
+
 });
