@@ -1,6 +1,6 @@
 {
   "name": "w3w-javascript-wrapper",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "Javascript wrapper for the what3words API",
   "main": "dist/W3W.Geocoder.js",
   "scripts": {
@@ -26,10 +26,10 @@
       "email": "will@what3words.com"
     },
     {
-        "name": "David Piesse"
+      "name": "David Piesse"
     },
     {
-        "name": "Oliver Svenson"
+      "name": "Oliver Svenson"
     },
     {
       "name": "Arnaud Ferrand",
@@ -49,6 +49,7 @@
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-version": "^1.1.1",
     "jasmine-expect": "^2.0.2",
     "load-grunt-tasks": "^3.5.0"
   },

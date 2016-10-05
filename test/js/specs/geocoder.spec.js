@@ -4,6 +4,13 @@ validateHTTPStatus = function(data) {
     expect(data.status.status).toEqual(200);
 };
 
+validateHTTPPropertyStatus = function(data) {
+    expect(data.properties).toBeDefined();
+    expect(data.properties.status).toBeDefined();
+    expect(data.properties.status.status).toBeDefined();
+    expect(data.properties.status.status).toEqual(200);
+};
+
 validateJSONPayload = function(data) {
     validateHTTPStatus(data);
     expect(data.crs).toBeDefined();
@@ -31,6 +38,35 @@ validateJSONPayload = function(data) {
     expect(data.map).toEqual('http://w3w.co/index.home.raft');
 };
 
+validateGeoJSONPayload = function(data) {
+    validateHTTPPropertyStatus(data);
+    expect(data.crs).toBeDefined();
+    expect(data.crs.type).toBeDefined();
+    expect(data.crs.type).toEqual('link');
+    expect(data.crs.properties.href).toBeDefined();
+    expect(data.crs.properties.href).toEqual('http://spatialreference.org/ref/epsg/4326/ogcwkt/');
+    expect(data.crs.properties.type).toBeDefined();
+    expect(data.crs.properties.type).toEqual('ogcwkt');
+    expect(data.crs.properties).toBeDefined();
+    expect(data.bbox).toBeDefined();
+    expect(data.bbox).toEqual([-0.203607, 51.521238, -0.203564, 51.521265]);
+    expect(data.geometry).toBeDefined();
+    expect(data.geometry.coordinates).toBeDefined();
+    expect(data.geometry.coordinates).toEqual([-0.203586, 51.521251]);
+    expect(data.geometry.type).toBeDefined();
+    expect(data.geometry.type).toEqual('Point');
+    expect(data.type).toBeDefined();
+    expect(data.type).toEqual('Feature');
+    expect(data.properties).toBeDefined();
+    expect(data.properties.words).toBeDefined();
+    expect(data.properties.words).toEqual('index.home.raft');
+    expect(data.properties.language).toBeDefined();
+    expect(data.properties.language).toEqual('en');
+    expect(data.properties.map).toBeDefined();
+    expect(data.properties.map).toEqual('http://w3w.co/index.home.raft');
+    expect(data.properties.thanks).toBeDefined();
+};
+
 describe('what3words', function() {
     describe('initialisation and loading', function() {
         it('should be available as a function', function() {
@@ -54,6 +90,7 @@ describe('what3words', function() {
         it('should throw Error when missing options', function() {
             expect(missingOptions).toThrowError(Error);
         });
+
         it('should throw Error when missing API key in options', function() {
             expect(missingApiKey).toThrowError(Error);
         });
@@ -61,12 +98,11 @@ describe('what3words', function() {
 
     describe('construction', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
         it('should be instance of W3W.Geocoder', function() {
@@ -77,15 +113,14 @@ describe('what3words', function() {
 
     describe('#forward', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
-        it('should forward geocode index.home.raft', function(done) {
+        it('should forward geocode index.home.raft defaulting to JSON', function(done) {
             var callback = {
                 onSuccess: function(data) {
                     validateJSONPayload(data);
@@ -96,24 +131,86 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'index.home.raft'
             };
+
             what3words.forward(params, callback);
+        });
+
+        it('should forward geocode index.home.raft in JSON', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateJSONPayload(data);
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                addr: 'index.home.raft',
+                format: 'json'
+            };
+
+            what3words.forward(params, callback);
+        });
+
+        it('should forward geocode index.home.raft in GeoJSON ', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateGeoJSONPayload(data);
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                addr: 'index.home.raft',
+                format: 'geojson'
+            };
+
+            what3words.forward(params, callback);
+        });
+
+        it ('should catch an Error exception when an invalid format of type "xml" is requested', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    throw new Error('onSuccess should never be invoked');
+                },
+                onFailure: function(data) {
+                    throw new Error('onFailure should never be invoked');
+                }
+            };
+
+            var params = {
+                addr: 'index.home.raft',
+                format: 'xml'
+            };
+
+            expect(function() {
+                what3words.forward(params, callback);
+            }).toThrow(new Error('params.format must have a value of "json" or "geojson"'));
+            done();
         });
     });
 
     describe('#reverse', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
-        it('should reverse geocode 51.521251, -0.203586', function(done) {
+        it('should reverse geocode [51.521251, -0.203586] defaulting to JSON', function(done) {
             var callback = {
                 onSuccess: function(data) {
                     validateJSONPayload(data);
@@ -124,21 +221,83 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 coords: [51.521251, -0.203586]
             };
+
             what3words.reverse(params, callback);
+        });
+
+        it('should reverse geocode [51.521251, -0.203586] in JSON', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateJSONPayload(data);
+                    done();
+                },
+                onFailure: function(data) {
+                    expect(data.status.status).toEqual(200);
+                    done();
+                }
+            };
+
+            var params = {
+                coords: [51.521251, -0.203586],
+                format: 'json'
+            };
+
+            what3words.reverse(params, callback);
+        });
+
+        it('should reverse geocode [51.521251, -0.203586] in GeoJSON', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateGeoJSONPayload(data);
+                    done();
+                },
+                onFailure: function(data) {
+                    expect(data.status.status).toEqual(200);
+                    done();
+                }
+            };
+
+            var params = {
+                coords: [51.521251, -0.203586],
+                format: 'geojson'
+            };
+
+            what3words.reverse(params, callback);
+        });
+
+        it ('should catch an Error exception when an invalid format of type "xml" is requested', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    throw new Error('onSuccess should never be invoked');
+                },
+                onFailure: function(data) {
+                    throw new Error('onFailure should never be invoked');
+                }
+            };
+
+            var params = {
+                coords: [51.521251, -0.203586],
+                format: 'xml'
+            };
+
+            expect(function() {
+                what3words.reverse(params, callback);
+            }).toThrow(new Error('params.format must have a value of "json" or "geojson"'));
+            done();
         });
     });
 
     describe('#autosuggest', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
         it('should autosuggest plan.clips.a with no focus and no clipping', function(done) {
@@ -157,6 +316,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'plan.clips.a',
                 lang: 'en',
@@ -164,6 +324,7 @@ describe('what3words', function() {
                     type: 'none'
                 }
             };
+
             what3words.autosuggest(params, callback);
         });
 
@@ -183,6 +344,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'plan.clips.a',
                 focus: [51.521251, -0.203586],
@@ -191,6 +353,7 @@ describe('what3words', function() {
                     type: 'none'
                 }
             };
+
             what3words.autosuggest(params, callback);
         });
 
@@ -210,6 +373,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'plan.clips.a',
                 focus: [51.521251, -0.203586],
@@ -219,6 +383,7 @@ describe('what3words', function() {
                     distance: 100
                 }
             };
+
             what3words.autosuggest(params, callback);
         });
 
@@ -238,6 +403,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'plan.clips.a',
                 lang: 'en',
@@ -247,6 +413,7 @@ describe('what3words', function() {
                     distance: 100
                 }
             };
+
             what3words.autosuggest(params, callback);
         });
 
@@ -266,6 +433,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'plan.clips.a',
                 lang: 'en',
@@ -275,21 +443,21 @@ describe('what3words', function() {
                     bbox: [54, 2, 50, -4]
                 }
             };
+
             what3words.autosuggest(params, callback);
         });
     });
 
     describe('#standardblend', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
-        it('should return a standardblend for index.home.raft with a focus of 51.4243877,-0.3474524', function(done) {
+        it('should return a JSON standardblend for index.home.raft with a focus of 51.4243877,-0.3474524', function(done) {
             var callback = {
                 onSuccess: function(data) {
                     validateHTTPStatus(data);
@@ -307,26 +475,27 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             var params = {
                 addr: 'index.home.raft',
                 lang: 'en',
                 focus: [51.4243877, -0.3474524]
             };
+
             what3words.standardblend(params, callback);
         });
     });
 
     describe('#grid', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
-        it('should create a grid for bounding box 52.208867,0.117540,52.207988,0.116126', function(done) {
+        it('should create a grid for bounding box 52.208867,0.117540,52.207988,0.116126 defaulting to JSON', function(done) {
             var callback = {
                 onSuccess: function(data) {
                     validateHTTPStatus(data);
@@ -334,6 +503,16 @@ describe('what3words', function() {
                     expect(data.lines).toBeDefined();
                     expect(data.lines).toBeArray();
                     expect(data.lines.length).toBeGreaterThan(4);
+                    expect(data.lines[0].start).toBeDefined();
+                    expect(data.lines[0].start.lat).toBeDefined();
+                    expect(data.lines[0].start.lat).toEqual(52.208009918068);
+                    expect(data.lines[0].start.lng).toBeDefined();
+                    expect(data.lines[0].start.lng).toEqual(0.11612600000001);
+                    expect(data.lines[0].end).toBeDefined();
+                    expect(data.lines[0].end.lat).toBeDefined();
+                    expect(data.lines[0].end.lat).toEqual(52.208009918068);
+                    expect(data.lines[0].end.lng).toBeDefined();
+                    expect(data.lines[0].end.lng).toEqual(0.11753999999999);
                     done();
                 },
                 onFailure: function(data) {
@@ -345,18 +524,103 @@ describe('what3words', function() {
             var params = {
                 bbox: [52.208867, 0.117540, 52.207988, 0.116126]
             };
+
             what3words.grid(params, callback);
+        });
+
+        it('should create a grid for bounding box 52.208867,0.117540,52.207988,0.116126 in JSON', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateHTTPStatus(data);
+
+                    expect(data.lines).toBeDefined();
+                    expect(data.lines).toBeArray();
+                    expect(data.lines.length).toBeGreaterThan(4);
+                    expect(data.lines[0].start).toBeDefined();
+                    expect(data.lines[0].start.lat).toBeDefined();
+                    expect(data.lines[0].start.lat).toEqual(52.208009918068);
+                    expect(data.lines[0].start.lng).toBeDefined();
+                    expect(data.lines[0].start.lng).toEqual(0.11612600000001);
+                    expect(data.lines[0].end).toBeDefined();
+                    expect(data.lines[0].end.lat).toBeDefined();
+                    expect(data.lines[0].end.lat).toEqual(52.208009918068);
+                    expect(data.lines[0].end.lng).toBeDefined();
+                    expect(data.lines[0].end.lng).toEqual(0.11753999999999);
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                bbox: [52.208867, 0.117540, 52.207988, 0.116126],
+                format: 'json'
+            };
+
+            what3words.grid(params, callback);
+        });
+
+        it('should create a grid for bounding box 52.208867,0.117540,52.207988,0.116126 in GeoJSON', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateHTTPPropertyStatus(data);
+
+                    expect(data.coordinates).toBeDefined();
+                    expect(data.coordinates).toBeArray();
+                    expect(data.coordinates[0]).toBeArray();
+                    expect(data.coordinates[0][0]).toEqual([0.11612600000001, 52.208009918068]);
+                    expect(data.coordinates[0][1]).toEqual([0.11753999999999, 52.208009918068]);
+                    expect(data.type).toBeDefined();
+                    expect(data.type).toEqual('MultiLineString');
+                    expect(data.properties).toBeDefined();
+                    expect(data.properties.thanks).toBeDefined();
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                bbox: [52.208867, 0.117540, 52.207988, 0.116126],
+                format: 'geojson'
+            };
+
+            what3words.grid(params, callback);
+        });
+
+        it ('should catch an Error exception when an invalid format of type "xml" is requested', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    throw new Error('onSuccess should never be invoked');
+                },
+                onFailure: function(data) {
+                    throw new Error('onFailure should never be invoked');
+                }
+            };
+
+            var params = {
+                bbox: [52.208867, 0.117540, 52.207988, 0.116126],
+                format: 'xml'
+            };
+
+            expect(function() {
+                what3words.grid(params, callback);
+            }).toThrow(new Error('params.format must have a value of "json" or "geojson"'));
+            done();
         });
     });
 
     describe('#languages', function() {
         var what3words;
-        var options = {
-            key: W3W_API_KEY
-        };
 
         beforeEach(function() {
-            what3words = new W3W.Geocoder(options);
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
         });
 
         it('should return valid 3 word address languages', function(done) {
@@ -377,6 +641,7 @@ describe('what3words', function() {
                     done();
                 }
             };
+
             what3words.languages(callback);
         });
     });

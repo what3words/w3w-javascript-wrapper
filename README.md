@@ -73,12 +73,13 @@ Object literal containing the parameters to be passed to the `forward` method.
 | ----- | ---- | ------- | ----------- |
 | `addr` | `String` | None | A 3 word address |
 | `lang` | `String` | `en` | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code |
+| `format` | `String` | `json` | Return data format, can be `json` or `geojson` |
 
 #### `callbackHandler`
 
 Object literal containing the `onSuccess` and `onFailure` functions; see [callbacks](#callbacks) for more information.
 
-The `onSuccess` callback's JSON will look similar to the following:
+When JSON output is requested, the `onSuccess` callback's response will look similar to the following:
 
 ```JSON
 {
@@ -111,6 +112,44 @@ The `onSuccess` callback's JSON will look similar to the following:
     "reason": "OK"
   },
   "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+}
+```
+
+When GeoJSON output is requested, the `onSuccess` callback's response will look similar to the following:
+
+```JSON
+{
+  "crs": {
+    "type": "link",
+    "properties": {
+      "href": "http://spatialreference.org/ref/epsg/4326/ogcwkt/",
+      "type": "ogcwkt"
+    }
+  },
+  "bbox": [
+    -0.203607,
+    51.521238,
+    -0.203564,
+    51.521265
+  ],
+  "geometry": {
+    "coordinates": [
+      -0.203586,
+      51.521251
+    ],
+    "type": "Point"
+  },
+  "type": "Feature",
+  "properties": {
+    "words": "index.home.raft",
+    "language": "en",
+    "map": "http://w3w.co/index.home.raft",
+    "status": {
+      "status": 200,
+      "reason": "OK"
+    },
+    "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+  }
 }
 ```
 
@@ -157,12 +196,13 @@ Object literal containing the parameters to be passed to the `reverse` method.
 | ----- | ---- | ------- | ----------- |
 | `coords` | `String`,`Array` | None | Coordinates either as a comma separated string or as an array in long, lat order |
 | `lang` | `String` | `en` | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code |
+| `format` | `String` | `json` | Return data format, can be `json` or `geojson` |
 
 #### `callbackHandler`
 
 Object literal containing the `onSuccess` and `onFailure` functions; see [callbacks](#callbacks) for more information.
 
-The `onSuccess` callback's JSON will look similar to the following:
+When JSON output is requested, the `onSuccess` callback's response will look similar to the following:
 
 ```JSON
 {
@@ -195,6 +235,44 @@ The `onSuccess` callback's JSON will look similar to the following:
     "reason": "OK"
   },
   "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+}
+```
+
+When GeoJSON output is requested, the `onSuccess` callback's response will look similar to the following:
+
+```JSON
+{
+  "crs": {
+    "type": "link",
+    "properties": {
+      "href": "http://spatialreference.org/ref/epsg/4326/ogcwkt/",
+      "type": "ogcwkt"
+    }
+  },
+  "bbox": [
+    -0.203607,
+    51.521238,
+    -0.203564,
+    51.521265
+  ],
+  "geometry": {
+    "coordinates": [
+      -0.203586,
+      51.521251
+    ],
+    "type": "Point"
+  },
+  "type": "Feature",
+  "properties": {
+    "words": "index.home.raft",
+    "language": "en",
+    "map": "http://w3w.co/index.home.raft",
+    "status": {
+      "status": 200,
+      "reason": "OK"
+    },
+    "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+  }
 }
 ```
 
@@ -538,12 +616,14 @@ Object literal containing the parameters to be passed to the `grid` method.
 | Param | Type | Default | Description |
 | ----- | ---- | ------- | ----------- |
 | `bbox` | `String`, `Array` | None | Bounding box, specified by the northeast and southwest corner coordinates, for which the grid should be returned. The bounding box can be specified either as a comma separated string or as an array of 4 elements in lat, long order|
+| `format` | `String` | `json` | Return data format, can be `json` or `geojson` |
+
 
 #### `callbackHandler`
 
 Object literal containing the `onSuccess` and `onFailure` functions; see [callbacks](#callbacks) for more information.
 
-The `onSuccess` callback's JSON will look similar to the following:
+When JSON output is requested, the `onSuccess` callback's response will look similar to the following:
 
 ```JSON
 {
@@ -575,6 +655,34 @@ The `onSuccess` callback's JSON will look similar to the following:
     "reason": "OK"
   },
   "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+}
+```
+
+When GeoJSON output is requested, the `onSuccess` callback's response will look similar to the following:
+
+```JSON
+{
+  "coordinates": [
+    [
+      [
+        0.11612600000001,
+        52.208009918068
+      ],
+      [
+        0.11753999999999,
+        52.208009918068
+      ]
+    ],
+    ...
+  ],
+  "type": "MultiLineString",
+  "properties": {
+    "status": {
+      "status": 200,
+      "reason": "OK"
+    },
+    "thanks": "Thanks from all of us at index.home.raft for using a what3words API"
+  }
 }
 ```
 
@@ -701,3 +809,15 @@ var callback = {
 
 w3w.languages(callback);
 ```
+
+# Revision History
+
+* `v3.1.0` 05/10/16 - Add support for GeoJSON returns for the `forward`, `reverse` and `grid` methods
+* `v3.0.5` 18/8/16 - Fix bug in language handling. Add additional system tests
+* `v3.0.4` 18/07/16 - Fix bug in handling options
+* `v3.0.3` 27/6/16 - Fix Bower installation bug and rationalise version numbers
+* `v3.0.2` 26/6/16 - Minor README tweaks
+* `v3.0.1` 24/6/16 - Update Travis build with encrypted test API key
+* `v3.0.0` 24/6/16 - Rewrite and restructure; add system tests and Travis builds
+* `v2.0.0` 24/7/15 - Use v2 of the what3words RESTful API under the hood
+* `v1.0.0` 27/1/15 - Initial release

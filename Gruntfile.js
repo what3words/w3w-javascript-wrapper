@@ -52,6 +52,11 @@ module.exports = function(grunt) {
                 }
             }
         },
+        version: {
+            project: {
+                src: ['bower.json', 'src/js/Bootstrap.js', 'package.json']
+            }
+        },
         watch: {
             options: {
                 livereload: true,

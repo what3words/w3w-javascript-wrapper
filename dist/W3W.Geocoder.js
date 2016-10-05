@@ -3,7 +3,7 @@
 'use strict';
 
 var W3W = {
-    version: '3.0.5'
+    version: '3.0.6'
 };
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -120,10 +120,11 @@ W3W.Geocoder = function(options) {
         throw new Error('Missing what3words API key');
     }
     this.options = {
-        lang: 'en'
+        lang: 'en',
+        format: 'json'
     };
     this.options = W3W.Utils.mergeOptions(this.options, options);
-    if( this.options.hasOwnProperty('base_url')) {
+    if (this.options.hasOwnProperty('base_url')) {
         this.base_url = this.options.base_url;
         delete this.options.base_url;
     }
@@ -138,8 +139,9 @@ W3W.Geocoder = function(options) {
 };
 
 // var params = {
-//     addr: 'index.home.raft',
-//     lang: 'en'
+//      addr: '3-word-address',
+//      lang: 'en',
+//      format: 'json|geojson'
 // };
 W3W.Geocoder.prototype.forward = function(params, callback) {
     if (typeof params === 'undefined' || typeof params !== 'object') {
@@ -156,6 +158,15 @@ W3W.Geocoder.prototype.forward = function(params, callback) {
 
         if (params.hasOwnProperty('lang') && typeof params.lang !== 'string') {
             throw new Error('params.lang must be a string');
+        }
+
+        if (params.hasOwnProperty('format')) {
+            if (typeof params.format !== 'string') {
+                throw new Error('params.format must be a string');
+            }
+            else if (params.format !== 'json' && params.format !== 'geojson') {
+                throw new Error('params.format must have a value of "json" or "geojson"');
+            }
         }
     }
 
@@ -174,7 +185,8 @@ W3W.Geocoder.prototype.forward = function(params, callback) {
 // var params = {
 //      coords: [lat, long],
 //      coords: 'lat,long',
-//      lang: 'en'
+//      lang: 'en',
+//      format: 'json|geojson'
 // };
 W3W.Geocoder.prototype.reverse = function(params, callback) {
     if (typeof params === 'undefined' || typeof params !== 'object') {
@@ -195,6 +207,15 @@ W3W.Geocoder.prototype.reverse = function(params, callback) {
         if (params.hasOwnProperty('lang') && typeof params.lang !== 'string') {
             throw new Error('params.lang must be a string');
         }
+
+        if (params.hasOwnProperty('format')) {
+            if (typeof params.format !== 'string') {
+                throw new Error('params.format must be a string');
+            }
+            else if (params.format !== 'json' && params.format !== 'geojson') {
+                throw new Error('params.format must have a value of "json" or "geojson"');
+            }
+        }
     }
 
     if (typeof callback === 'undefined') {
@@ -211,7 +232,7 @@ W3W.Geocoder.prototype.reverse = function(params, callback) {
 
 // var params = {
 //      lang: 'en',
-//      addr: 'index.home.r'
+//      addr: '3-word-address'
 //     focus: [lat, lng],
 //     focus: 'lat,lng',
 //     clip: {
@@ -260,6 +281,15 @@ W3W.Geocoder.prototype.autosuggest = function(params, callback) {
         }
         else if (typeof params.lang !== 'string') {
             throw new Error('params.lang must be a string');
+        }
+
+        if (params.hasOwnProperty('format')) {
+            if (typeof params.format !== 'string') {
+                throw new Error('params.format must be a string');
+            }
+            else if (params.format !== 'json') {
+                throw new Error('params.format must have a value of "json"');
+            }
         }
 
         if (params.hasOwnProperty('clip')) {
@@ -341,6 +371,11 @@ W3W.Geocoder.prototype.autosuggest = function(params, callback) {
     W3W.Xhr.handleRequest(url, callback);
 };
 
+// var params = {
+//      addr: '3-word-address',
+//      lang: 'en',
+//      focus: '[lat, lng]
+// };
 W3W.Geocoder.prototype.standardblend = function(params, callback) {
     if (typeof params === 'undefined' || typeof params !== 'object') {
         throw new Error('Missing or invalid params object');
@@ -367,6 +402,15 @@ W3W.Geocoder.prototype.standardblend = function(params, callback) {
         else if (typeof params.lang !== 'string') {
             throw new Error('params.lang must be a string');
         }
+
+        if (params.hasOwnProperty('format')) {
+            if (typeof params.format !== 'string') {
+                throw new Error('params.format must be a string');
+            }
+            else if (params.format !== 'json') {
+                throw new Error('params.format must have a value of "json"');
+            }
+        }
     }
 
     if (typeof callback === 'undefined') {
@@ -381,6 +425,10 @@ W3W.Geocoder.prototype.standardblend = function(params, callback) {
     W3W.Xhr.handleRequest(url, callback);
 };
 
+// var params = {
+//      bbox: [nelat, nelng, swlat, swlng],
+//      format: 'json|geojson'
+// };
 W3W.Geocoder.prototype.grid = function(params, callback) {
     if (typeof params === 'undefined' || typeof params !== 'object') {
         throw new Error('Missing or invalid params object');
@@ -394,6 +442,15 @@ W3W.Geocoder.prototype.grid = function(params, callback) {
         params.bbox = this._formatBoundingBox(params.bbox);
         if (null === params.bbox) {
             throw new Error('Invalid format coordinates for params.bbox');
+        }
+
+        if (params.hasOwnProperty('format')) {
+            if (typeof params.format !== 'string') {
+                throw new Error('params.format must be a string');
+            }
+            else if (params.format !== 'json' && params.format !== 'geojson') {
+                throw new Error('params.format must have a value of "json" or "geojson"');
+            }
         }
     }
 
