@@ -28,6 +28,81 @@ mr_validateGeoJSONPayload = function(data) {
 
 describe('what3words', function() {
 
+    describe('#multiple forward', function() {
+        var what3words;
+
+        beforeEach(function() {
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
+        });
+
+        it('should reverse geocode "topping.chop.online" 3 times to JSON, GeoJSON and then JSON', function(done) {
+
+            var ended = 0;
+            function allDone(idx) {
+                ended += idx;
+                if(ended === 6) {
+                    done();
+                }
+            }
+
+            var callbackJSON1 = {
+                onSuccess: function(data) {
+                    mr_validateJSONPayload(data);
+                    allDone(1);
+                },
+                onFailure: function(data) {
+                    expect(data.status.status).toEqual(200);
+                    done();
+                }
+            };
+
+            var callbackJSON2 = {
+                onSuccess: function(data) {
+                    mr_validateJSONPayload(data);
+                    allDone(2);
+                },
+                onFailure: function(data) {
+                    expect(data.status.status).toEqual(200);
+                    done();
+                }
+            };
+
+            var callbackGeoJSON = {
+                onSuccess: function(data) {
+                    mr_validateGeoJSONPayload(data);
+                    allDone(3);
+                },
+                onFailure: function(data) {
+                    expect(data.status.status).toEqual(200);
+                    done();
+                }
+            };
+
+            var params = {
+                addr: 'topping.chop.online',
+            };
+
+            what3words.forward(params, callbackJSON1);
+
+            params = {
+                addr: 'topping.chop.online',
+                format: 'geojson'
+            };
+
+            what3words.forward(params, callbackGeoJSON);
+
+            params = {
+                addr: 'topping.chop.online',
+            };
+
+            what3words.forward(params, callbackJSON2);
+
+        });
+
+    });
+
     describe('#multiple reverse', function() {
         var what3words;
 
@@ -44,9 +119,7 @@ describe('what3words', function() {
                 ended += idx;
                 if(ended === 6) {
                     done();
-                } else {
-                    console.log(ended);
-                }
+                } 
             }
 
             var callbackJSON1 = {
