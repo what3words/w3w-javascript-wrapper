@@ -3,7 +3,7 @@
 'use strict';
 
 var W3W = {
-    version: '3.1.1'
+    version: '3.1.2'
 };
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -92,13 +92,15 @@ W3W.Utils = {
         var len;
         var src;
 
+        var options = JSON.parse(JSON.stringify(dest));
+
         for (i=1, len = arguments.length; i<len; i++) {
             src = arguments[i];
             for (j in src) {
-                dest[j] = src[j];
+                options[j] = src[j];
             }
         }
-        return dest;
+        return options;
     },
 
     assembleQuery: function(params) {
@@ -177,8 +179,7 @@ W3W.Geocoder.prototype.forward = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var defaults = JSON.parse(JSON.stringify(this.options));
-    params = W3W.Utils.mergeOptions(defaults, params);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.forward + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -226,8 +227,7 @@ W3W.Geocoder.prototype.reverse = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var defaults = JSON.parse(JSON.stringify(this.options));
-    params = W3W.Utils.mergeOptions(defaults, params);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.reverse + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -368,8 +368,7 @@ W3W.Geocoder.prototype.autosuggest = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var defaults = JSON.parse(JSON.stringify(this.options));
-    params = W3W.Utils.mergeOptions(defaults, params, clip);
+    params = W3W.Utils.mergeOptions(this.options, params, clip);
     var url = this.urls.autosuggest + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -423,8 +422,7 @@ W3W.Geocoder.prototype.standardblend = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var defaults = JSON.parse(JSON.stringify(this.options));
-    params = W3W.Utils.mergeOptions(defaults, params);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.standardblend + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };
@@ -465,8 +463,7 @@ W3W.Geocoder.prototype.grid = function(params, callback) {
         throw new Error('Missing or invalid callback parameter');
     }
 
-    var defaults = JSON.parse(JSON.stringify(this.options));
-    params = W3W.Utils.mergeOptions(defaults, params);
+    params = W3W.Utils.mergeOptions(this.options, params);
     var url = this.urls.grid + '?' + W3W.Utils.assembleQuery(params);
     W3W.Xhr.handleRequest(url, callback);
 };

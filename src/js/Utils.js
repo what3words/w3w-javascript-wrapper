@@ -5,13 +5,15 @@ W3W.Utils = {
         var len;
         var src;
 
+        var options = JSON.parse(JSON.stringify(dest));
+
         for (i=1, len = arguments.length; i<len; i++) {
             src = arguments[i];
             for (j in src) {
-                dest[j] = src[j];
+                options[j] = src[j];
             }
         }
-        return dest;
+        return options;
     },
 
     assembleQuery: function(params) {
