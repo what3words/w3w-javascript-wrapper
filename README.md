@@ -812,6 +812,7 @@ w3w.languages(callback);
 
 # Revision History
 
+* `v3.1.2` 07/10/16 - Factorise cloning in mergeOptions
 * `v3.1.1` 06/10/16 - Fix bug when merging in default parameters
 * `v3.1.0` 05/10/16 - Add support for GeoJSON returns for the `forward`, `reverse` and `grid` methods
 * `v3.0.5` 18/8/16 - Fix bug in language handling. Add additional system tests
