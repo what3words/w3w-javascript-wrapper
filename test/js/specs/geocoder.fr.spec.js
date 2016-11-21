@@ -103,8 +103,8 @@ describe('what3words in french', function() {
                     expect(data.blends).toBeArray();
                     expect(data.blends.length).toEqual(3);
                     expect(data.blends[0].words).toEqual('bassin.casanier.onction');
-                    expect(data.blends[1].words).toEqual('bassin.casanier.foncer');
-                    expect(data.blends[2].words).toEqual('bassin.casanier.oncle');
+                    expect(data.blends[1].words).toEqual('bassin.casanier.oncle');
+                    expect(data.blends[2].words).toEqual('bassin.casanier.noce');
                     done();
                 },
                 onFailure: function(data) {
