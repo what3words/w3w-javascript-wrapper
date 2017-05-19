@@ -448,6 +448,44 @@ describe('what3words', function() {
         });
     });
 
+    describe('#autosuggest-ml', function() {
+        var what3words;
+
+        beforeEach(function() {
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
+        });
+
+        it('should autosuggest plan.clips.a with no focus and no clipping', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateHTTPStatus(data);
+                    expect(data.suggestions).toBeDefined();
+                    expect(data.suggestions.length).toEqual(3);
+                    expect(data.suggestions[0].words).toEqual('plan.clips.also');
+                    expect(data.suggestions[1].words).toEqual('plan.clips.back');
+                    expect(data.suggestions[2].words).toEqual('plan.clips.each');
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                addr: 'plan.clips.a',
+                lang: 'en',
+                clip: {
+                    type: 'none'
+                }
+            };
+
+            what3words.autosuggest(params, callback);
+        });
+    });
+
     describe('#standardblend', function() {
         var what3words;
 
@@ -483,6 +521,44 @@ describe('what3words', function() {
             };
 
             what3words.standardblend(params, callback);
+        });
+    });
+
+    describe('#standardblend-ml', function() {
+        var what3words;
+
+        beforeEach(function() {
+            what3words = new W3W.Geocoder({
+                key: W3W_API_KEY
+            });
+        });
+
+        it('should return a JSON standardblend-ml for index.home.raft with a focus of 51.4243877,-0.3474524', function(done) {
+            var callback = {
+                onSuccess: function(data) {
+                    validateHTTPStatus(data);
+
+                    expect(data.blends).toBeDefined();
+                    expect(data.blends).toBeArray();
+                    expect(data.blends.length).toEqual(3);
+                    expect(data.blends[0].words).toEqual('index.home.raft');
+                    expect(data.blends[1].words).toEqual('index.homes.raft');
+                    expect(data.blends[2].words).toEqual('indexes.home.raft');
+                    done();
+                },
+                onFailure: function(data) {
+                    validateHTTPStatus(data);
+                    done();
+                }
+            };
+
+            var params = {
+                addr: 'index.home.raft',
+                lang: 'en',
+                focus: [51.4243877, -0.3474524]
+            };
+
+            what3words.standardblend_ml(params, callback);
         });
     });
 
