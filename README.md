@@ -1,4 +1,4 @@
-# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="64" height="64" alt="what3words">&nbsp;w3w-javascript-wrapper ![Build Status](https://travis-ci.org/what3words/w3w-javascript-wrapper.svg)
+# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="32" height="32" alt="what3words">&nbsp;w3w-javascript-wrapper [![Build Status](https://travis-ci.org/what3words/w3w-javascript-wrapper.svg?branch=master)](https://travis-ci.org/what3words/w3w-javascript-wrapper)
 
 ## Description
 
